@@ -32,7 +32,7 @@ add_definitions(${EIGEN_DEFINITIONS})
 add_message_files(
    DIRECTORY msg
    FILES
-   #>>>>TODO: ADD THE MSG FILES
+   DesiredPose.msg
 )
 
 ## Generate services 
