@@ -39,7 +39,7 @@ add_message_files(
 add_service_files(
   DIRECTORY srv
   FILES
-  #>>>>TODO: ADD THE SERVICE FILES
+  send_desired_pose.srv
 )
 
 
