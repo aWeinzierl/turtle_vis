@@ -83,7 +83,7 @@ int main( int argc, char** argv )
 
     //#>>>>TODO: LOAD p_gain FROM THE ROS PARAMETER SERVER 
 
-    ros::param::get("p_gain",p_g); //TODO: p_gain -> also include ; also solves the above todo?
+    ros::param::get("/turtle_gains/p_gain",p_g); //TODO: p_gain -> also include ; also solves the above todo?
     ROS_INFO_STREAM("p_g= "<<p_g);
 
 
