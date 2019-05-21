@@ -54,7 +54,16 @@ Vector3d TurtleClass::getLocalDesiredPose()
     return local;
 }
 
+    void TurtleClass::SetLocalPose(const Vector3d &pose) {
+        pthread_mutex_lock( &this->count_mutex );
+        this->turtlePose_g = pose;
+        pthread_mutex_unlock( &this->count_mutex );
+    }
 
-
+    void TurtleClass::SetLocalDesiredPose(const Vector3d &pose) {
+        pthread_mutex_lock( &this->count_mutex );
+        this->turtlePose_desired_g = pose;
+        pthread_mutex_unlock( &this->count_mutex );
+    }
 
 }

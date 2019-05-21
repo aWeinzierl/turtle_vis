@@ -107,7 +107,7 @@ int main( int argc, char** argv )
     //DESIRED POSE
     Vector3d turtlePose_desired_local;
     ////#>>>>TODO: INITIALIZE THE DESIRED POSE VARIABLE OF THE CLASS TURTLE
-    =turtlePose; //TODO: which class variable? there is none?
+    turtleF.SetLocalDesiredPose(turtlePose); //TODO: which class variable? there is none? create one + setter?
     turtlePose_desired_local=turtlePose;
 
 
@@ -121,11 +121,11 @@ int main( int argc, char** argv )
         dt=tf.toSec()-ti.toSec();
 
         ////#>>>>TODO: Get Desired Pose from the class variable
-        turtlePose_desired_local=turtleF.getDPose(); //TODO: how to create parameters here?
+        turtlePose_desired_local=turtleF.getLocalDesiredPose(); //TODO: correct one selected?
 
         //CONTROL
         ////#>>>>TODO:COMPUTE THE ERROR BETWEEN CURRENT POSE AND DESIRED
-        error=turtlePose_old; //TODO: why error = pose_old??
+        error=turtlePose_desired_local - turtlePose_old; //TODO: why error = pose_old??
         // COMPUTE THE INCREMENTS
         turtleVel=-Kp*error;
 

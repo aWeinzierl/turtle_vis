@@ -37,6 +37,9 @@ namespace turtleSpace
 
                 Vector3d getLocalPose();
                 Vector3d getLocalDesiredPose();
+                void SetLocalPose(const Vector3d &pose);
+                void SetLocalDesiredPose(const Vector3d &pose);
+
 
     private:
                 Vector3d turtlePose_g; //TOOD: add although no comment? what about setters?
