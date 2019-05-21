@@ -31,6 +31,7 @@
 ********************************************************************/
 #include <ros/ros.h>
 #include <std_msgs/String.h>
+#include <ros/console.h>
 #include <visualization_msgs/Marker.h>
 #include <visualization_msgs/MarkerArray.h>
 #include <tf/transform_listener.h>
@@ -74,21 +75,11 @@ int main( int argc, char** argv )
     //Proportional Gain
     Matrix3d Kp;
 
-
-   	
-
-    //#>>>>TODO: SET GAINS
-
     double p_g=0.0;
 
-    //#>>>>TODO: LOAD p_gain FROM THE ROS PARAMETER SERVER 
-
     ros::param::get("/turtle_gains/p_gain",p_g); //TODO: p_gain -> also include ; also solves the above todo?
-    ROS_INFO_STREAM("p_g= "<<p_g);
-
 
     //Proportional Gain
-
     Kp<<p_g,0  ,0,
             0  ,p_g,0,
             0  ,0  ,p_g;
@@ -127,9 +118,9 @@ int main( int argc, char** argv )
         ////#>>>>TODO:COMPUTE THE ERROR BETWEEN CURRENT POSE AND DESIRED
         error=turtlePose_desired_local - turtlePose_old; //TODO: why error = pose_old??
         // COMPUTE THE INCREMENTS
-        turtleVel=-Kp*error;
+        turtleVel=error/dt;
 
-        turtlePose+=turtleVel;
+        turtlePose+=-Kp*turtleVel;
 
         //Publish Data
         ////#>>>>TODO:SET THE MSG VARIABLE WITH THE NEW TURTLE POSE
