@@ -37,6 +37,10 @@ namespace turtleSpace
 
                 Vector3d getLocalPose();
                 Vector3d getLocalDesiredPose();
+
+    private:
+                Vector3d turtlePose_g; //TOOD: add although no comment? what about setters?
+                Vector3d turtlePose_desired_g;
     };
 
 
