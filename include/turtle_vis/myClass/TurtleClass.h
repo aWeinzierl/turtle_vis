@@ -27,15 +27,16 @@ namespace turtleSpace
     public:
 
 				pthread_mutex_t count_mutex;
-        
+
         TurtleClass();
         ~TurtleClass();
 
                 bool getDPose(turtle_vis::send_desired_pose::Request &req, turtle_vis::send_desired_pose::Response &res);
-			
-				//#>>>>TODO:CREATE A CALLBACK FUNCTION FOR THE SERVICE turtle_vis::send_desired_pose
 
-				//#>>>>TODO:CREATE 2 METHODS TO GET THE DESIRED TURTLE POSE AND CURRENT TURTLE POSE 
+                //#>>>>TODO:CREATE A CALLBACK FUNCTION FOR THE SERVICE turtle_vis::send_desired_pose
+
+                Vector3d getLocalPose();
+                Vector3d getLocalDesiredPose();
     };
 
 
