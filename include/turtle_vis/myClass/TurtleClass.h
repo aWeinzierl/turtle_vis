@@ -33,7 +33,7 @@ namespace turtleSpace
 
                 bool getDPose(turtle_vis::send_desired_pose::Request &req, turtle_vis::send_desired_pose::Response &res);
 
-                //#>>>>TODO:CREATE A CALLBACK FUNCTION FOR THE SERVICE turtle_vis::send_desired_pose
+                void getPose(const turtle_vis::DesiredPose::ConstPtr &msg);
 
                 Vector3d getLocalPose();
                 Vector3d getLocalDesiredPose();
