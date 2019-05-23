@@ -1,8 +1,5 @@
 <?xml version="1.0"?>
 <launch>
-    <node name="console" type="rqt_console" pkg="rqt_console" />
-    <node name="level" type="rqt_logger_level" pkg ="rqt_logger_level"/>
-
 
     <!--#>>>>TODO: LAUNCH A NODE TO PUBLISH AN STATIC TRANSFORMATION BETWEEN /map and /WORLD WITH A FREQ 100-->
 
