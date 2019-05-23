@@ -63,6 +63,8 @@ int main( int argc, char** argv )
                                                   &turtleF);
     //CALL SERVICE FROM TERMINAL//
     //    rosservice call /TurtlePose '{p: [0.5, 0.0, 3.0]}'
+    // rosservice call /TurtlePose "[ 0.0, 0.0, 0.0]"
+
     //    rosservice call /TurtlePose "{p: {x: 1.5, y: 1.0, theta: 0.0}}"
     //DON'T FORGET TO SOURCE THE WORKSPACE BEFORE CALLING THE SERVICE
 
@@ -124,6 +126,9 @@ int main( int argc, char** argv )
 
         //Publish Data
         ////#>>>>TODO:SET THE MSG VARIABLE WITH THE NEW TURTLE POSE
+        msg.y=turtlePose[1];
+        msg.theta=turtlePose[2];
+        msg.x=turtlePose[0];
 
         pub.publish(msg);
 
