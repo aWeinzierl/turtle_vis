@@ -13,5 +13,6 @@
   <!--#>>>>TODO:LAUNCH TURTLE CONTROL NODE. AS PART OF THIS NODE LOAD THE YAML FILE WITH THE GAIN PARAMETERS (SEE rvizConfigs/turtle_gains.yaml)-->
     <node name="turtle_control_node" pkg="turtle_vis" type="turtle_control_node"  output="screen" />
     <node name="turtle_set_position" pkg="turtle_vis" type="turtle_set_position"  output="screen" />
+    <node name="turtle_vis_node" pkg="turtle_vis" type="turtle_vis_node"  output="screen" />
 
 </launch>

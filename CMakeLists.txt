@@ -97,8 +97,8 @@ link_directories(${PROJECT_SOURCE_DIR}/lib)
 ##############################################################################
 
 # VISUALIZATION NODE
-# add_executable(turtle_vis_node src/solutions/turtle_vis_node.cpp)
-# target_link_libraries(turtle_vis_node ${catkin_LIBRARIES} ${roscpp_LIBRARIES} turtle_ros_tutorial)
+add_executable(turtle_vis_node src/solutions/turtle_vis_node.cpp)
+target_link_libraries(turtle_vis_node ${catkin_LIBRARIES} ${roscpp_LIBRARIES} turtle_ros_tutorial)
 
 # CONTROL NODE
 add_executable(turtle_control_node src/solutions/turtle_control_node.cpp)
