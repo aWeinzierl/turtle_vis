@@ -1,24 +1,4 @@
 /*********************************************************************
-* Compiler:         gcc 4.6.3
-*
-* Company:          Institute for Cognitive Systems
-*                   Technical University of Munich
-*
-* Author:           Emmanuel Dean (dean@tum.de)
-*                   Karinne Ramirez (karinne.ramirez@tum.de)
-*
-* Compatibility:    Ubuntu 12.04 64bit (ros hydro)
-*
-* Software Version: V0.1
-*
-* Created:          01.06.2015
-*
-* Comment:          turtle connection and visualization (Sensor and Signals)
-*
-********************************************************************/
-
-
-/*********************************************************************
 * STD INCLUDES
 ********************************************************************/
 #include <iostream>
@@ -73,7 +53,6 @@ int main(int argc, char** argv)
     //INITIALIZE THE CLIENT
     ros::ServiceClient client=n.serviceClient<turtle_vis::send_desired_pose>("TurtlePose");
 
-    ////#>>>>TODO: DEFINE A MSG VARIABLE FOR THE SERVICE MESSAGE
     turtle_vis::send_desired_pose msg;
 
     std::string myString;
@@ -91,7 +70,6 @@ int main(int argc, char** argv)
         std::cin>>myString;
         std::vector<std::string> fields;
         boost::split(fields, myString, boost::is_any_of(","));
-        ////#>>>>TODO:GET THE VALUES FROM THE TERMINAL AND SAVE THEM IN A LOCAL VARIABLE. YOU WILL GET X,Y AND THETA
         msg.request.desired_pose.x =     std::stod(fields[0]);
         msg.request.desired_pose.y =     std::stod(fields[1]);
         msg.request.desired_pose.theta = std::stod(fields[2]);
@@ -101,11 +79,6 @@ int main(int argc, char** argv)
         << msg.request.desired_pose.y<< ", theta="
         << msg.request.desired_pose.theta);
 
-
-        ////#>>>>TODO:CREATE THE MESSAGE WITH THE LOCAL VARIABLE
-
-
-        ////#>>>>TODO:COMPUTE THE POSITION AND ORIENTATION OF THE TF FOR THE DESIRED POSITION
         qtf.setRPY(0,0,msg.request.desired_pose.theta);
         transform.setOrigin(tf::Vector3(msg.request.desired_pose.x, msg.request.desired_pose.y, 0));
         transform.setRotation(qtf);

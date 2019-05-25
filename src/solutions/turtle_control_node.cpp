@@ -1,24 +1,4 @@
 /*********************************************************************
-* Compiler:         gcc 4.6.3
-*
-* Company:          Institute for Cognitive Systems
-*                   Technical University of Munich
-*
-* Author:           Emmanuel Dean (dean@tum.de)
-*                   Karinne Ramirez (karinne.ramirez@tum.de)
-*
-* Compatibility:    Ubuntu 12.04 64bit (ros hydro)
-*
-* Software Version: V0.1
-*
-* Created:          01.06.2015
-*
-* Comment:          turtle connection and visualization (Sensor and Signals)
-*
-********************************************************************/
-
-
-/*********************************************************************
 * STD INCLUDES
 ********************************************************************/
 #include <iostream>
@@ -99,13 +79,12 @@ int main( int argc, char** argv )
 
     //DESIRED POSE
     Vector3d turtlePose_desired_local;
-    ////#>>>>TODO: INITIALIZE THE DESIRED POSE VARIABLE OF THE CLASS TURTLE
-    turtleF.SetLocalDesiredPose(turtlePose); //TODO: which class variable? there is none? create one + setter?
+    turtleF.SetLocalDesiredPose(turtlePose);
     turtlePose_desired_local=turtlePose;
 
 
     //CREATE A DESIREDPOSE MSG VARIABLE
-    turtle_vis::DesiredPose msg; //#>>>>TODO:DEFINE THE MSG TYPE
+    turtle_vis::DesiredPose msg;
 
     while(ros::ok())
     {
@@ -113,25 +92,21 @@ int main( int argc, char** argv )
 
         dt=tf.toSec()-ti.toSec();
 
-        ////#>>>>TODO: Get Desired Pose from the class variable
-        turtlePose_desired_local=turtleF.getLocalDesiredPose(); //TODO: correct one selected?
+        turtlePose_desired_local=turtleF.getLocalDesiredPose();
 
         //CONTROL
-        ////#>>>>TODO:COMPUTE THE ERROR BETWEEN CURRENT POSE AND DESIRED
-        error=turtlePose_desired_local - turtlePose; //TODO: why error = pose_old??
+        error=turtlePose_desired_local - turtlePose;
         // COMPUTE THE INCREMENTS
         turtleVel=error*dt;
 
         turtlePose+=Kp*turtleVel;
 
         //Publish Data
-        ////#>>>>TODO:SET THE MSG VARIABLE WITH THE NEW TURTLE POSE
         msg.y=turtlePose[1];
         msg.theta=turtlePose[2];
         msg.x=turtlePose[0];
 
         pub.publish(msg);
-
 
 
         //SET THE HISTORY
