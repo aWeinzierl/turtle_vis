@@ -118,11 +118,11 @@ int main( int argc, char** argv )
 
         //CONTROL
         ////#>>>>TODO:COMPUTE THE ERROR BETWEEN CURRENT POSE AND DESIRED
-        error=turtlePose_desired_local - turtlePose_old; //TODO: why error = pose_old??
+        error=turtlePose_desired_local - turtlePose; //TODO: why error = pose_old??
         // COMPUTE THE INCREMENTS
-        turtleVel=error/dt;
+        turtleVel=error*dt;
 
-        turtlePose+=-Kp*turtleVel;
+        turtlePose+=Kp*turtleVel;
 
         //Publish Data
         ////#>>>>TODO:SET THE MSG VARIABLE WITH THE NEW TURTLE POSE
@@ -131,6 +131,8 @@ int main( int argc, char** argv )
         msg.x=turtlePose[0];
 
         pub.publish(msg);
+
+
 
         //SET THE HISTORY
         turtlePose_old=turtlePose;
