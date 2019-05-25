@@ -100,7 +100,7 @@ int main( int argc, char** argv )
 
 
 
-    turtle3D = createMarkerMesh("/turtle", 12345, visualization_msgs::Marker::MESH_RESOURCE,
+    turtle3D = createMarkerMesh("/map", 12345, visualization_msgs::Marker::MESH_RESOURCE,
                                 /*pos xyz:*/ 0.0, 0.024, -0.021,
                                 /*orientation quatern wxyz*/ 0 ,0 ,0, 1,
                                 /*scale s_x s_y s_z*/ 0.025, 0.025, 0.025,
@@ -142,6 +142,9 @@ int main( int argc, char** argv )
         br.sendTransform(tf::StampedTransform(transform,ros::Time::now(),"/world","/turtle"));
 
         ////#>>>>TODO:PUBLISH THE TURTLE MARKER
+        turtle3D.pose.position.x=turtlePose_local(0);
+        turtle3D.pose.position.y=turtlePose_local(1);
+        turtle3D.pose.orientation.z = turtlePose_local(2);
         marker_pub.publish(turtle3D/*//#>>>>TODO:USE THE MSG WITH TYPE MARKER*/);
 
         ros::spinOnce();
