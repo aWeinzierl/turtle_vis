@@ -10,10 +10,6 @@ TurtleClass::TurtleClass()
     //#>>>>TODO: INITIALIZE MEMBER VARIABLES
     count_mutex = PTHREAD_MUTEX_INITIALIZER;
 }
-TurtleClass::~TurtleClass()
-{
-
-}
 
 void TurtleClass::getPose(const turtle_vis::DesiredPose::ConstPtr &msg)
 {

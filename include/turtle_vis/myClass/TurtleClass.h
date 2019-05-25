@@ -29,7 +29,6 @@ namespace turtleSpace
 				pthread_mutex_t count_mutex;
 
         TurtleClass();
-        ~TurtleClass();
 
                 bool getDPose(turtle_vis::send_desired_pose::Request &req, turtle_vis::send_desired_pose::Response &res);
 
