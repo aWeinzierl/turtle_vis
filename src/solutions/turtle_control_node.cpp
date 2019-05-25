@@ -41,12 +41,6 @@ int main( int argc, char** argv )
     ros::ServiceServer service=n.advertiseService("TurtlePose",
                                                   &turtleSpace::TurtleClass::getDPose,
                                                   &turtleF);
-    //CALL SERVICE FROM TERMINAL//
-    //    rosservice call /TurtlePose '{p: [0.5, 0.0, 3.0]}'
-    // rosservice call /TurtlePose "[ 0.0, 0.0, 0.0]"
-
-    //    rosservice call /TurtlePose "{p: {x: 1.5, y: 1.0, theta: 0.0}}"
-    //DON'T FORGET TO SOURCE THE WORKSPACE BEFORE CALLING THE SERVICE
 
     //ADVERTIZE THE TOPIC
     ros::Publisher pub=n.advertise<turtle_vis::DesiredPose>("turtle_control",100);
