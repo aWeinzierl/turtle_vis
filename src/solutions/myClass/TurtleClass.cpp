@@ -1,5 +1,8 @@
 #include<turtle_vis/myClass/TurtleClass.h>
 
+#include <std_msgs/String.h>
+
+
 namespace turtleSpace {
 
 TurtleClass::TurtleClass()
@@ -15,7 +18,9 @@ TurtleClass::~TurtleClass()
 void TurtleClass::getPose(const turtle_vis::DesiredPose::ConstPtr &msg)
 {
     pthread_mutex_lock( &this->count_mutex );
+    auto receivedDesiredPose = turtle_vis::DesiredPose();
     //#>>>>TODO: COPY THE MSG TO A LOCAL VARIABLE
+    this->turtlePose_g={msg->x, msg->y, msg->theta};
     pthread_mutex_unlock( &this->count_mutex );
 
     //#>>>>TODO:PLOT THE OBTAINED DATA
@@ -25,6 +30,12 @@ bool TurtleClass::getDPose(turtle_vis::send_desired_pose::Request &req, turtle_v
 {
     pthread_mutex_lock( &this->count_mutex );
     //#>>>>TODO:COPY THE REQUEST MSG TO A LOCAL VARIABLE
+    auto receivedDesiredPose = req.desired_pose;
+    this->turtlePose_desired_g={
+                receivedDesiredPose.x,
+                receivedDesiredPose.y,
+                receivedDesiredPose.theta};
+
     pthread_mutex_unlock( &this->count_mutex );
 
     //#>>>>TODO:PLOT THE OBTAINED DATA
