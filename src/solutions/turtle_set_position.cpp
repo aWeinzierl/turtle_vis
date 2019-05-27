@@ -74,7 +74,7 @@ int main(int argc, char** argv)
         msg.request.desired_pose.y =     std::stod(fields[1]);
         msg.request.desired_pose.theta = std::stod(fields[2]);
 
-        ROS_INFO_STREAM("Received x="
+        ROS_INFO_STREAM("Entered: x="
         << msg.request.desired_pose.x << ", y="
         << msg.request.desired_pose.y<< ", theta="
         << msg.request.desired_pose.theta);
@@ -88,7 +88,14 @@ int main(int argc, char** argv)
 
         if(client.call(msg))
         {
-            //#>>>>TODO:PLOT THE MESSAGE
+            ROS_INFO_STREAM("request succeeded\n"<<
+                            "send_desired_pose: { \n "<<
+                            "    desired_pose: {\n"<<
+                            "        x: " << msg.request.desired_pose.x << "\n"<<
+                            "        y: " << msg.request.desired_pose.y << "\n"<<
+                            "        theta: " << msg.request.desired_pose.theta<< "\n"<<
+                            "     }"<< "\n"<<
+                            "}");
         }
         else
         {
