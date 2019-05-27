@@ -53,7 +53,7 @@ int main( int argc, char** argv )
 
     double p_g=0.0;
 
-    ros::param::get("/turtle_gains/p_gain",p_g); //TODO: p_gain -> also include ; also solves the above todo?
+    ros::param::get("/turtle_gains/p_gain",p_g);
 
     //Proportional Gain
     Kp<<p_g,0  ,0,
