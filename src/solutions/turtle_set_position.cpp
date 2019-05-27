@@ -40,10 +40,9 @@
 using namespace Eigen;
 
 
-int main(int argc, char** argv)
-{
+int main(int argc, char **argv) {
 
-    ros::init(argc, argv, "turtle_visualization",ros::init_options::AnonymousName);
+    ros::init(argc, argv, "turtle_visualization", ros::init_options::AnonymousName);
 
     ROS_INFO_STREAM("**Client turtle desired position");
 
@@ -51,7 +50,7 @@ int main(int argc, char** argv)
     ros::Rate r(60);
 
     //INITIALIZE THE CLIENT
-    ros::ServiceClient client=n.serviceClient<turtle_vis::send_desired_pose>("TurtlePose");
+    ros::ServiceClient client = n.serviceClient<turtle_vis::send_desired_pose>("TurtlePose");
 
     turtle_vis::send_desired_pose msg;
 
@@ -61,50 +60,45 @@ int main(int argc, char** argv)
     tf::Transform transform;
     tf::Quaternion qtf;
 
-    while(ros::ok())
-    {
+    while (ros::ok()) {
 
         std::vector<double> vals;
 
         ROS_INFO_STREAM("Give me the desired position of the turtle: x,y,theta");
-        std::cin>>myString;
+        std::cin >> myString;
         std::vector<std::string> fields;
         boost::split(fields, myString, boost::is_any_of(","));
-        msg.request.desired_pose.x =     std::stod(fields[0]);
-        msg.request.desired_pose.y =     std::stod(fields[1]);
+        msg.request.desired_pose.x = std::stod(fields[0]);
+        msg.request.desired_pose.y = std::stod(fields[1]);
         msg.request.desired_pose.theta = std::stod(fields[2]);
 
         ROS_INFO_STREAM("Entered: x="
-        << msg.request.desired_pose.x << ", y="
-        << msg.request.desired_pose.y<< ", theta="
-        << msg.request.desired_pose.theta);
+                                << msg.request.desired_pose.x << ", y="
+                                << msg.request.desired_pose.y << ", theta="
+                                << msg.request.desired_pose.theta);
 
-        qtf.setRPY(0,0,msg.request.desired_pose.theta);
+        qtf.setRPY(0, 0, msg.request.desired_pose.theta);
         transform.setOrigin(tf::Vector3(msg.request.desired_pose.x, msg.request.desired_pose.y, 0));
         transform.setRotation(qtf);
 
-        br.sendTransform(tf::StampedTransform(transform,ros::Time::now(),"/world","/turtle_desired"));
+        br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "/world", "/turtle_desired"));
 
 
-        if(client.call(msg))
-        {
-            ROS_INFO_STREAM("request succeeded\n"<<
-                            "send_desired_pose: { \n "<<
-                            "    desired_pose: {\n"<<
-                            "        x: " << msg.request.desired_pose.x << "\n"<<
-                            "        y: " << msg.request.desired_pose.y << "\n"<<
-                            "        theta: " << msg.request.desired_pose.theta<< "\n"<<
-                            "     }"<< "\n"<<
-                            "}");
-        }
-        else
-        {
+        if (client.call(msg)) {
+            ROS_INFO_STREAM("request succeeded\n" <<
+                                                  "send_desired_pose: { \n " <<
+                                                  "    desired_pose: {\n" <<
+                                                  "        x: " << msg.request.desired_pose.x << "\n" <<
+                                                  "        y: " << msg.request.desired_pose.y << "\n" <<
+                                                  "        theta: " << msg.request.desired_pose.theta << "\n" <<
+                                                  "     }" << "\n" <<
+                                                  "}");
+        } else {
             ROS_ERROR_STREAM("Failed to call the service 'TurtlePose'");
             return 1;
         }
 
     }
-
 
 
     return 0;

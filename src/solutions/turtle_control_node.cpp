@@ -24,10 +24,9 @@
 #include <turtle_vis/myClass/TurtleClass.h>
 
 
-int main( int argc, char** argv )
-{
+int main(int argc, char **argv) {
 
-    ros::init(argc, argv, "turtle_control",ros::init_options::AnonymousName);
+    ros::init(argc, argv, "turtle_control", ros::init_options::AnonymousName);
 
     ROS_INFO_STREAM("**Publishing turtle control..");
 
@@ -38,74 +37,73 @@ int main( int argc, char** argv )
 
     //ADVERTISE THE SERVICE
     turtleSpace::TurtleClass turtleF;
-    ros::ServiceServer service=n.advertiseService("TurtlePose",
-                                                  &turtleSpace::TurtleClass::getDPose,
-                                                  &turtleF);
+    ros::ServiceServer service = n.advertiseService("TurtlePose",
+                                                    &turtleSpace::TurtleClass::getDPose,
+                                                    &turtleF);
 
     //ADVERTIZE THE TOPIC
-    ros::Publisher pub=n.advertise<turtle_vis::DesiredPose>("turtle_control",100);
+    ros::Publisher pub = n.advertise<turtle_vis::DesiredPose>("turtle_control", 100);
 
     ros::Time ti, tf;
-    ti=ros::Time::now();
+    ti = ros::Time::now();
 
     //Proportional Gain
     Matrix3d Kp;
 
-    double p_g=0.0;
+    double p_g = 0.0;
 
-    ros::param::get("/turtle_gains/p_gain",p_g);
+    ros::param::get("/turtle_gains/p_gain", p_g);
 
     //Proportional Gain
-    Kp<<p_g,0  ,0,
-            0  ,p_g,0,
-            0  ,0  ,p_g;
+    Kp << p_g, 0, 0,
+            0, p_g, 0,
+            0, 0, p_g;
 
-    ROS_INFO_STREAM("Kp= \n"<<Kp);
+    ROS_INFO_STREAM("Kp= \n" << Kp);
 
-    Vector3d turtlePose,turtlePose_old,turtleVel;
+    Vector3d turtlePose, turtlePose_old, turtleVel;
     Vector3d error;
     double dt;
 
     //INITIALIZE THE TURTLE POSE
-    turtlePose<<1,0,0;
-    turtlePose_old=turtlePose;
-    turtleVel<<0,0,0;
+    turtlePose << 1, 0, 0;
+    turtlePose_old = turtlePose;
+    turtleVel << 0, 0, 0;
 
     //DESIRED POSE
     Vector3d turtlePose_desired_local;
     turtleF.SetLocalDesiredPose(turtlePose);
-    turtlePose_desired_local=turtlePose;
+    turtlePose_desired_local = turtlePose;
 
 
     //CREATE A DESIREDPOSE MSG VARIABLE
     turtle_vis::DesiredPose msg;
 
-    while(ros::ok())
-    {
-        tf=ros::Time::now();
+    while (ros::ok()) {
+        tf = ros::Time::now();
 
-        dt=tf.toSec()-ti.toSec();
+        dt = tf.toSec() - ti.toSec();
 
-        turtlePose_desired_local=turtleF.getLocalDesiredPose();
+        turtlePose_desired_local = turtleF.getLocalDesiredPose();
 
         //CONTROL
-        error=turtlePose_desired_local - turtlePose;
+        error = turtlePose_desired_local - turtlePose;
         // COMPUTE THE INCREMENTS
-        turtleVel=error*dt;
+        turtleVel = error * dt;
 
-        turtlePose+=Kp*turtleVel;
+        turtlePose += Kp * turtleVel;
 
         //Publish Data
-        msg.y=turtlePose[1];
-        msg.theta=turtlePose[2];
-        msg.x=turtlePose[0];
+        msg.y = turtlePose[1];
+        msg.theta = turtlePose[2];
+        msg.x = turtlePose[0];
 
         pub.publish(msg);
 
 
         //SET THE HISTORY
-        turtlePose_old=turtlePose;
-        ti=tf;
+        turtlePose_old = turtlePose;
+        ti = tf;
 
         //ROS::SPIN IS IMPORTANT TO UPDATE ALL THE SERVICES AND TOPICS
         ros::spinOnce();
